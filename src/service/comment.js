@@ -6,7 +6,11 @@ async function createComment(payload, id) {
     body: payload,
   });
 
-  return response.json();
+  const { data } = response.json();
+
+  console.log(data);
+
+  return data;
 }
 
 export default createComment;

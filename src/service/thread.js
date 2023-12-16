@@ -5,7 +5,9 @@ async function getThreads() {
     method: 'GET',
   });
 
-  return response.json();
+  const { data } = await response.json();
+
+  return data;
 }
 
 async function createThread(payload) {
@@ -14,7 +16,9 @@ async function createThread(payload) {
     body: payload,
   });
 
-  return response.json();
+  const { data } = await response.json();
+
+  return data;
 }
 
 async function showThread(payload) {
