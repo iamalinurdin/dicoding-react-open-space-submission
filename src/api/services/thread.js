@@ -35,4 +35,47 @@ async function showThread(payload) {
   return response.json();
 }
 
-export { getThreads, createThread, showThread };
+async function upVoteThread(id) {
+  const response = await fetch(`${baseURL}/threads/${id}/up-vote`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+      'Content-Type': 'application/json'
+    },
+  });
+
+  return response.json()
+}
+
+async function downVoteThread(id) {
+  const response = await fetch(`${baseURL}/threads/${id}/down-vote`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+      'Content-Type': 'application/json'
+    },
+  });
+
+  return response.json()
+}
+
+async function neutralVoteThread(id) {
+  const response = await fetch(`${baseURL}/threads/${id}/neutral-vote`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+      'Content-Type': 'application/json'
+    },
+  });
+
+  return response.json()
+}
+
+export { 
+  getThreads, 
+  createThread, 
+  showThread,
+  upVoteThread,
+  downVoteThread,
+  neutralVoteThread
+};
