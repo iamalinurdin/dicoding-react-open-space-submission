@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { asyncPreloadProcess } from './redux/preload/action';
+import Leaderboards from './pages/Leaderboards';
 
 function App() {
   const auth = useSelector((state) => state.auth)
@@ -35,6 +36,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/thread/:id" element={<DetailThread />} />
+        <Route path="/leaderboard" element={<Leaderboards />} />
       </Route>
     </Routes>
   );
