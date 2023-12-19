@@ -1,4 +1,8 @@
+import { fetchWithAuth } from ".";
+
 const baseURL = process.env.REACT_APP_BASE_URL;
+
+
 
 async function login(payload) {
   const response = await fetch(`${baseURL}/login`, {
@@ -25,13 +29,18 @@ async function users() {
 }
 
 async function me() {
-  const response = await fetch(`${baseURL}/users/me`, {
-    method: 'GET',
-  });
+  // const response = await fetch(`${baseURL}/users/me`, {
+  //   method: 'GET',
+  // });
+
+  const response = await fetchWithAuth(`${baseURL}/users/me`);
 
   return response.json();
 }
 
 export {
-  login, register, users, me,
+  login, 
+  register, 
+  users, 
+  me
 };
