@@ -6,8 +6,15 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <div className="d-flex justify-content-center">
-        <div className="w-50 py-3 px-2 min-h-100 bg-light">
+      <div className="row d-flex justify-content-center w-100 mt-3">
+        <div className="col-3">
+          <div className="card rounded-0 border-0">
+            <div className="card-body">
+              asdasdasd
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
           <Outlet />
         </div>
       </div>

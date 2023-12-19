@@ -7,12 +7,12 @@ import useInput from '../hooks/useInput';
 export default function Home() {
   const threads = useSelector((state) => state.threads);
   const dispatch = useDispatch();
-  const [thread, onChangeThread] = useInput()
+  const [body, onChangeThread] = useInput()
   const [title, onChangeTitle] = useInput()
   const [category, onChangeCategory] = useInput()
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatch(asyncAddThreadActionCreator({title, category, thread}))
+    dispatch(asyncAddThreadActionCreator({title, category, body}))
   }
 
   useEffect(() => {

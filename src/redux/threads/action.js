@@ -35,11 +35,11 @@ function asyncReceiveThreadsActionCreator() {
   }
 }
 
-function asyncAddThreadActionCreator({ title, category, text }) {
+function asyncAddThreadActionCreator({ title, category, body }) {
   return async (dispatch) => {
     try {
-      const response = await createThread({ title, category, text })
-      const { thread } = response.data
+      const response = await createThread({ title, category, body })
+      const { thread } = response
 
       dispatch(addThreadActionCreator(thread))
     } catch (error) {

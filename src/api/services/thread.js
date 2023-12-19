@@ -1,3 +1,5 @@
+import { getAccessToken } from "..";
+
 const baseURL = process.env.REACT_APP_BASE_URL;
 
 async function getThreads() {
@@ -13,7 +15,11 @@ async function getThreads() {
 async function createThread(payload) {
   const response = await fetch(`${baseURL}/threads`, {
     method: 'POST',
-    body: payload,
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload),
   });
 
   const { data } = await response.json();
