@@ -1,12 +1,14 @@
-import { fetchWithAuth } from ".";
+import { fetchWithAuth } from "../index";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-
-
 async function login(payload) {
   const response = await fetch(`${baseURL}/login`, {
-    body: payload,
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 
   return response.json();
@@ -14,7 +16,11 @@ async function login(payload) {
 
 async function register(payload) {
   const response = await fetch(`${baseURL}/register`, {
-    body: payload,
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 
   return response.json();
