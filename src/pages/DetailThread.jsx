@@ -4,30 +4,42 @@ import Thread from "../components/Thread";
 import Comment from "../components/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncDetailThreadActionCreator } from "../redux/thread/action";
+import useInput from '../hooks/useInput';
+import { asyncAddCommentActionCreator } from "../redux/comments/action";
+
 
 export default function DetailThread() {
   const params = useParams();
+  const id = params.id
   const { thread = null } = useSelector((state) => state)
   const dispatch = useDispatch()
-
+  const [content, onChangeContent] = useInput()
 
   useEffect(() => {
-    dispatch(asyncDetailThreadActionCreator(params.id))
-  }, [dispatch, params]);
+    dispatch(asyncDetailThreadActionCreator(id))
+  }, [dispatch, id]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // console.log(content)
+    dispatch(asyncAddCommentActionCreator({ content, id }))
+  }
 
   return (
     <>
       <Thread thread={thread}>
         <h4 className="fw-semibold">Beri komentar</h4>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <textarea name="" id="" cols="30" rows="5" className="form-control"></textarea>
+            <textarea onChange={onChangeContent} name="" id="" cols="30" rows="5" className="form-control"></textarea>
           </div>
           <button className="btn btn-primary w-100">Simpan</button>
         </form>
       </Thread>
       {thread?.comments?.map((comment) => (
-        <Comment comment={comment} />
+        <div key={comment.id}>
+          <Comment comment={comment} />
+        </div>
       ))}
     </>
   );

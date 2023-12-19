@@ -1,49 +1,37 @@
-import { putAccessToken } from "../../api"
-import { login, me } from "../../api/user"
+import createComment from "../../api/services/comment"
 
 const ActionType = {
-  LOGIN: 'LOGIN',
-  RECEIVE_USERS: 'RECEIVE_USERS',
-  SET_OWN_PROFILE: 'SET_OWN_PROFILE',
+  ADD_COMMENT: 'ADD_COMMENT',
 }
 
-function setUsersActionCreator(users) {
+function addCommentActionCreator(comment) {
   return {
-    type: ActionType.RECEIVE_USERS,
+    type: ActionType.ADD_COMMENT,
     payload: {
-      users
+      comment,
     }
   }
 }
 
-function setOwnProfileActionCreator(user) {
-  return {
-    type: ActionType.SET_OWN_PROFILE,
-    payload: {
-      user
-    }
-  }
-}
 
-function setLoginActionCreator(user) {
-  return {
-    type: ActionType.LOGIN,
-    payload: {
-      user
-    }
-  }
-}
-
-function asyncLoginActionCreator({ email, password }) {
+function asyncAddCommentActionCreator({ content, id }) {
   return async (dispatch) => {
     try {
-      const token = await login({ email, password })
-      putAccessToken(token)
-      const profile = await me()
+      const response = await createComment({ content, id })
+      
+      console.log(response)
+      // putAccessToken(token)
+      // const profile = await me()
 
-      dispatch(setLoginActionCreator(profile))
+      // dispatch(setLoginActionCreator(profile))
     } catch (error) {
       alert(error.message)
     }
   }
+}
+
+export {
+  ActionType,
+  addCommentActionCreator,
+  asyncAddCommentActionCreator
 }
