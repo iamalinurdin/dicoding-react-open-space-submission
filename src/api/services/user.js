@@ -26,7 +26,7 @@ async function register(payload) {
   return response.json();
 }
 
-async function users() {
+async function getUsers() {
   const response = await fetch(`${baseURL}/users`, {
     method: 'GET',
   });
@@ -47,6 +47,6 @@ async function me() {
 export {
   login, 
   register, 
-  users, 
+  getUsers, 
   me
 };

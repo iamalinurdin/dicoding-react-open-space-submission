@@ -10,10 +10,15 @@ import {
 } from '../redux/thread/action';
 
 function Thread({ children, thread }) {
-  const { auth } = useSelector((state) => state)
+  const { auth, users } = useSelector((state) => state)
   const dispatch = useDispatch()
   const isUpVoted = thread?.upVotesBy?.includes(auth.id)
   const isDownVoted = thread?.downVotesBy?.includes(auth.id)
+  const owner = thread.hasOwnProperty('ownerId')
+    ? users.filter((user) => user.id === thread?.ownerId)[0]
+    : thread?.owner
+
+  console.log(owner)
 
   const upVoteHandler = (id) => {
     dispatch(asyncNeutralVoteThreadActionCreator(id))
@@ -28,8 +33,12 @@ function Thread({ children, thread }) {
   return (
     <div className="card border-0 bg-transparent">
       <div className="card-body">
+        <div className="d-flex align-items-center gap-2 mb-3">
+          <img src={owner?.avatar} height={40} className='rounded-circle' alt="" />
+          <span className="fw-bold">{owner?.name}</span>
+        </div>
         <div className="d-block mb-3">
-          <p className='border w-auto d-inline px-2 py-1 rounded-3 border-black small'>#{thread?.category}</p>
+          <p className='border w-auto d-inline px-2 py-1 rounded-3 small'>#{thread?.category}</p>
         </div>
         <Link to={`/thread/${thread?.id}`} className='fw-semibold text-decoration-none fs-5'>{thread?.title}</Link>
         <p className="mb-0">{thread?.body}</p>
@@ -51,7 +60,7 @@ function Thread({ children, thread }) {
           <FontAwesomeIcon icon={['far', 'comments']} />
           <span>{thread?.totalComments}</span>
           <span>{thread?.createdAt}</span>
-          <span>Dibuat oleh <span className="fw-semibold">asdasd</span></span>
+          {/* <span>Dibuat oleh <span className="fw-semibold">asdasd</span></span> */}
         </div>
         {children}
       </div>

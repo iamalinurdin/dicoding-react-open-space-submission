@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import Header from './Header';
 
 export default function Layout() {
@@ -9,8 +9,11 @@ export default function Layout() {
       <div className="row d-flex justify-content-center w-100 mt-3">
         <div className="col-3">
           <div className="card rounded-0 border-0">
-            <div className="card-body">
-              asdasdasd
+            <div className="card-body d-flex flex-column gap-2">
+              <NavLink to='/' className='btn btn-primary w-100'>Threads</NavLink>
+              <NavLink to='/leaderboard' className='btn btn-primary w-100'>Leaderboards</NavLink>
+              <hr />
+              <button className="btn btn-primary">Logout</button>
             </div>
           </div>
         </div>

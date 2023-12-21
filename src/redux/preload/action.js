@@ -1,5 +1,6 @@
 import { me } from "../../api/services/user"
 import { setAuthUserActionCreator } from "../auth/action"
+import { asyncRetrieveUsersActionCreator } from "../users/action"
 
 const ActionType = {
   SET_PRELOAD: 'SET_PRELOAD'
@@ -20,6 +21,7 @@ function asyncPreloadProcess() {
       const profile = await me()
       const { user } = profile.data
 
+      dispatch(asyncRetrieveUsersActionCreator())
       dispatch(setAuthUserActionCreator(user))
     } catch (error) {
       dispatch(setAuthUserActionCreator(null))

@@ -65,5 +65,5 @@ export {
   unsetAuthUserActionCreator,
   asyncSetAuthUserActionCreator,
   asyncUnsetAuthUserActionCreator,
-  asyncRegisterActionCreator
+  asyncRegisterActionCreator,
 }
