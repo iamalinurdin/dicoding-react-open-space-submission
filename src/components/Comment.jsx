@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useSelector } from "react-redux";
+import { fullDatetime } from "../utils/datetime";
 
 export default function Comment({ comment, threadId, upVoteHandler, downVoteHandler }) {
   const { auth, } = useSelector((state) => state)
@@ -13,7 +14,7 @@ export default function Comment({ comment, threadId, upVoteHandler, downVoteHand
         <div className="d-flex justify-content-between align-items-center mb-3">
           <img src={comment.owner.avatar} width={40} className="rounded-circle" alt="" />
           <span className="fs-6 ms-3 me-auto">{comment.owner.name}</span>
-          <span className='small text-muted'>{comment.createdAt}</span>
+          <span className='small text-muted'>{fullDatetime(comment.createdAt)}</span>
         </div>
         <span>{comment.content}</span>
         <div className="d-flex align-items-center gap-2">

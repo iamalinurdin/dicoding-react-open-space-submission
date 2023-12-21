@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
+import { fullDatetime } from '../utils/datetime';
 
 function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
   const { auth, users } = useSelector((state) => state)
@@ -41,7 +42,7 @@ function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
           <span>{thread?.downVotesBy?.length ?? 0}</span>
           <FontAwesomeIcon icon={['far', 'comments']} />
           <span>{thread?.totalComments}</span>
-          <span className='small text-muted'>{thread?.createdAt}</span>
+          <span className='small text-muted'>{fullDatetime(thread?.createdAt)}</span>
         </div>
         {children}
       </div>
