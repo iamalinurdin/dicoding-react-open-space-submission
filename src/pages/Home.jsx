@@ -45,7 +45,7 @@ export default function Home() {
           <label htmlFor="thread">Thread</label>
           <textarea onChange={onChangeThread} id='thread' cols="30" rows="5" className="form-control" placeholder='Write your thread here...'></textarea>
         </div>
-        <button type='submit' className="btn btn-primary w-100 rounded-pill">Create Thread</button>
+        <button type='submit' className="btn btn-primary w-100">Create Thread</button>
       </form>
 
       {threads && threads.map((thread) => (
