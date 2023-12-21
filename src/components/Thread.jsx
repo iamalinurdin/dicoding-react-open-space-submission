@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncDownVoteThreadActionCreator, asyncUpVoteThreadActionCreator } from '../redux/thread/action';
+import { 
+  asyncDownVoteThreadActionCreator, 
+  asyncNeutralVoteThreadActionCreator, 
+  asyncUpVoteThreadActionCreator 
+} from '../redux/thread/action';
 
 function Thread({ children, thread }) {
   const { auth } = useSelector((state) => state)
@@ -12,10 +16,12 @@ function Thread({ children, thread }) {
   const isDownVoted = thread?.downVotesBy?.includes(auth.id)
 
   const upVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
     dispatch(asyncUpVoteThreadActionCreator(id))
   }
 
   const downVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
     dispatch(asyncDownVoteThreadActionCreator(id))
   }
 

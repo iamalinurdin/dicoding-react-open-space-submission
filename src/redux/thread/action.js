@@ -1,10 +1,11 @@
 import { createComment } from "../../api/services/comment"
-import { downVoteThread, showThread, upVoteThread } from "../../api/services/thread"
+import { downVoteThread, neutralVoteThread, showThread, upVoteThread } from "../../api/services/thread"
 
 const ActionType = {
   DETAIL_THREAD: 'DETAIL_THREAD',
   UP_VOTE: 'UP_VOTE',
   DOWN_VOTE: 'DOWN_VOTE',
+  NEUTRAL_VOTE: 'NEUTRAL_VOTE',
   ADD_COMMENT: 'ADD_COMMENT',
   COMMENT_UP_VOTE: 'COMMENT_UP_VOTE',
   COMMENT_DOWN_VOTE: 'COMMENT_DOWN_VOTE',
@@ -28,20 +29,20 @@ function setDetailThreadActionCreator(thread) {
   }
 }
 
-function upVoteThreadActionCreator(thread) {
+function upVoteThreadActionCreator(userId) {
   return {
     type: ActionType.UP_VOTE,
     payload: {
-      thread
+      userId
     }
   }
 }
 
-function downVoteThreadActionCreator(thread) {
+function downVoteThreadActionCreator(userId) {
   return {
     type: ActionType.DOWN_VOTE,
     payload: {
-      thread
+      userId
     }
   }
 }
@@ -64,9 +65,9 @@ function downVoteCommentActionCreator(id) {
   }
 }
 
-function neutralVoteCommentActionCreator(id) {
+function neutralVoteThreadActionCreator(id) {
   return {
-    type: ActionType.COMMENT_UP_VOTE,
+    type: ActionType.NEUTRAL_VOTE,
     payload: {
       id
     }
@@ -103,8 +104,9 @@ function asyncUpVoteThreadActionCreator(id) {
   return async (dispatch) => {
     try {
       const response = await upVoteThread(id);
+      const { userId } = response.data.vote
 
-      console.log(response)
+      dispatch(upVoteThreadActionCreator(userId))
     } catch (error) {
       alert(error.message)
     }
@@ -115,10 +117,22 @@ function asyncDownVoteThreadActionCreator(id) {
   return async (dispatch) => {
     try {
       const response = await downVoteThread(id);
+      const { userId } = response.data.vote
 
-      console.log(response)
+      dispatch(downVoteThreadActionCreator(userId))
     } catch (error) {
       alert(error.message)
+    }
+  }
+}
+
+function asyncNeutralVoteThreadActionCreator(id) {
+  return async (dispatch) => {
+    try {
+      await neutralVoteThread(id);
+    } catch (error) {
+      alert(error.message)
+      // dispatch(downVoteThreadActionCreator(id))
     }
   }
 }
@@ -128,11 +142,12 @@ export {
   setDetailThreadActionCreator,
   upVoteThreadActionCreator,
   downVoteThreadActionCreator,
+  neutralVoteThreadActionCreator,
   upVoteCommentActionCreator,
   downVoteCommentActionCreator,
-  neutralVoteCommentActionCreator,
   asyncDetailThreadActionCreator,
   asyncUpVoteThreadActionCreator,
   asyncDownVoteThreadActionCreator,
+  asyncNeutralVoteThreadActionCreator,
   asyncAddCommentActionCreator
 }
