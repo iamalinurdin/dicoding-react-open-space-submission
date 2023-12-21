@@ -6,6 +6,49 @@ function threadsReducer(threads = [], action = {}) {
       return action.payload.threads    
     case ActionType.ADD_THREAD:
       return [action.payload.thread, ...threads]
+    case ActionType.UP_VOTE:
+      return threads.map((thread) => {
+        if (thread.id === action.payload.threadId) {
+          return {
+            ...thread,
+            upVotesBy: thread.upVotesBy.includes(action.payload.userId)
+              ? thread.upVotesBy.filter((item) => item !== action.payload.userId)
+              : thread.upVotesBy.concat([action.payload.userId]),
+            downVotesBy: thread.downVotesBy.filter((item) => item !== action.payload.userId)
+          }
+        }
+
+        return thread;
+      })
+      // return {
+      //   ...thread,
+      //   upVotesBy: thread.upVotesBy.includes(action.payload.userId)
+      //     ? thread.upVotesBy.filter((item) => item !== action.payload.userId)
+      //     : thread.upVotesBy.concat([action.payload.userId]),
+      //   downVotesBy: thread.downVotesBy.filter((item) => item !== action.payload.userId)
+      // }
+    case ActionType.DOWN_VOTE:
+      return threads.map((thread) => {
+        if (thread.id === action.payload.threadId) {
+          return {
+            ...thread,
+            downVotesBy: thread.downVotesBy.includes(action.payload.userId)
+              ? thread.downVotesBy.filter((item) => item !== action.payload.userId)
+              : thread.downVotesBy.concat([action.payload.userId]),
+            upVotesBy: thread.upVotesBy.filter((item) => item !== action.payload.userId)
+          }
+        }
+
+        return thread;
+      })
+
+      // return {
+      //   ...thread,
+      //   downVotesBy: thread.downVotesBy.includes(action.payload.userId)
+      //     ? thread.downVotesBy.filter((item) => item !== action.payload.userId)
+      //     : thread.downVotesBy.concat([action.payload.userId]),
+      //   upVotesBy: thread.upVotesBy.filter((item) => item !== action.payload.userId)
+      // }
     default:
       return threads
   }

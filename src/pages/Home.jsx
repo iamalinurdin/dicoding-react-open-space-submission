@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Thread from '../components/Thread';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncAddThreadActionCreator, asyncReceiveThreadsActionCreator } from '../redux/threads/action';
+import { asyncAddThreadActionCreator, asyncDownVoteThreadActionCreator, asyncNeutralVoteThreadActionCreator, asyncReceiveThreadsActionCreator, asyncUpVoteThreadActionCreator } from '../redux/threads/action';
 import useInput from '../hooks/useInput';
 
 export default function Home() {
@@ -18,6 +18,15 @@ export default function Home() {
   useEffect(() => {
     dispatch(asyncReceiveThreadsActionCreator());
   }, [dispatch])
+  const upVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
+    dispatch(asyncUpVoteThreadActionCreator(id))
+  }
+
+  const downVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
+    dispatch(asyncDownVoteThreadActionCreator(id))
+  }
 
   return (
     <>
@@ -41,7 +50,7 @@ export default function Home() {
 
       {threads && threads.map((thread) => (
         <div key={thread.id} className="mb-3">
-          <Thread thread={thread} />
+          <Thread thread={thread} upVoteHandler={upVoteHandler} downVoteHandler={downVoteHandler} />
         </div>
       ))}
     </>

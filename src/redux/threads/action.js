@@ -1,8 +1,10 @@
-import { createThread, getThreads } from "../../api/services/thread"
+import { createThread, downVoteThread, getThreads, neutralVoteThread, upVoteThread } from "../../api/services/thread"
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
-  ADD_THREAD: 'ADD_THREAD'
+  ADD_THREAD: 'ADD_THREAD',
+  UP_VOTE: 'UP_VOTE',
+  DOWN_VOTE: 'DOWN_VOTE',
 }
 
 function setReceiveThreadsActionCreator(threads) {
@@ -19,6 +21,26 @@ function addThreadActionCreator(thread) {
     type: ActionType.ADD_THREAD,
     payload: {
       thread
+    }
+  }
+}
+
+function upVoteThreadActionCreator(threadId, userId) {
+  return {
+    type: ActionType.UP_VOTE,
+    payload: {
+      threadId, 
+      userId
+    }
+  }
+}
+
+function downVoteThreadActionCreator(threadId, userId) {
+  return {
+    type: ActionType.DOWN_VOTE,
+    payload: {
+      threadId, 
+      userId
     }
   }
 }
@@ -48,10 +70,50 @@ function asyncAddThreadActionCreator({ title, category, body }) {
   }
 }
 
+function asyncUpVoteThreadActionCreator(threadId) {
+  return async (dispatch) => {
+    try {
+      const response = await upVoteThread(threadId);
+      const { userId } = response.data.vote
+
+      dispatch(upVoteThreadActionCreator(threadId, userId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
+
+function asyncDownVoteThreadActionCreator(threadId) {
+  return async (dispatch) => {
+    try {
+      const response = await downVoteThread(threadId);
+      const { userId } = response.data.vote
+
+      dispatch(downVoteThreadActionCreator(threadId, userId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
+
+function asyncNeutralVoteThreadActionCreator(id) {
+  return async () => {
+    try {
+      await neutralVoteThread(id);
+    } catch (error) {
+      alert(error.message)
+      // dispatch(downVoteThreadActionCreator(id))
+    }
+  }
+}
+
 export {
   ActionType,
   setReceiveThreadsActionCreator,
   addThreadActionCreator,
   asyncReceiveThreadsActionCreator,
-  asyncAddThreadActionCreator
+  asyncAddThreadActionCreator,
+  asyncUpVoteThreadActionCreator,
+  asyncDownVoteThreadActionCreator,
+  asyncNeutralVoteThreadActionCreator
 }
