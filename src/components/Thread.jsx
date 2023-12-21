@@ -2,33 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useDispatch, useSelector } from 'react-redux';
-import { 
-  asyncDownVoteThreadActionCreator, 
-  asyncNeutralVoteThreadActionCreator, 
-  asyncUpVoteThreadActionCreator 
-} from '../redux/thread/action';
+import { useSelector } from 'react-redux';
 
-function Thread({ children, thread }) {
+function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
   const { auth, users } = useSelector((state) => state)
-  const dispatch = useDispatch()
   const isUpVoted = thread?.upVotesBy?.includes(auth.id)
   const isDownVoted = thread?.downVotesBy?.includes(auth.id)
   const owner = thread.hasOwnProperty('ownerId')
     ? users.filter((user) => user.id === thread?.ownerId)[0]
-    : thread?.owner
-
-  console.log(owner)
-
-  const upVoteHandler = (id) => {
-    dispatch(asyncNeutralVoteThreadActionCreator(id))
-    dispatch(asyncUpVoteThreadActionCreator(id))
-  }
-
-  const downVoteHandler = (id) => {
-    dispatch(asyncNeutralVoteThreadActionCreator(id))
-    dispatch(asyncDownVoteThreadActionCreator(id))
-  }
+    : thread?.owner;
 
   return (
     <div className="card border-0 bg-transparent">
@@ -60,7 +42,6 @@ function Thread({ children, thread }) {
           <FontAwesomeIcon icon={['far', 'comments']} />
           <span>{thread?.totalComments}</span>
           <span>{thread?.createdAt}</span>
-          {/* <span>Dibuat oleh <span className="fw-semibold">asdasd</span></span> */}
         </div>
         {children}
       </div>

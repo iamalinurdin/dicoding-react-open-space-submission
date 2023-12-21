@@ -2,9 +2,20 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Thread from "../components/Thread";
 import Comment from "../components/Comment";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncAddCommentActionCreator, asyncDetailThreadActionCreator } from "../redux/thread/action";
+import { 
+  useDispatch, 
+  useSelector 
+} from "react-redux";
+import { 
+  asyncAddCommentActionCreator, 
+  asyncDetailThreadActionCreator 
+} from "../redux/thread/action";
 import useInput from '../hooks/useInput';
+import { 
+  asyncDownVoteThreadActionCreator, 
+  asyncNeutralVoteThreadActionCreator, 
+  asyncUpVoteThreadActionCreator 
+} from '../redux/thread/action';
 
 export default function DetailThread() {
   const params = useParams();
@@ -23,9 +34,19 @@ export default function DetailThread() {
     dispatch(asyncAddCommentActionCreator({ content, id }))
   }
 
+  const upVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
+    dispatch(asyncUpVoteThreadActionCreator(id))
+  }
+
+  const downVoteHandler = (id) => {
+    dispatch(asyncNeutralVoteThreadActionCreator(id))
+    dispatch(asyncDownVoteThreadActionCreator(id))
+  }
+
   return (
     <>
-      <Thread thread={thread}>
+      <Thread thread={thread} upVoteHandler={upVoteHandler} downVoteHandler={downVoteHandler}>
         <h4 className="fw-semibold">Beri komentar</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
