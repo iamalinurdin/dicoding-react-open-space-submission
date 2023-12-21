@@ -25,7 +25,7 @@ function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
           <p className='border w-auto d-inline px-2 py-1 rounded-3 small'>#{thread?.category}</p>
         </div>
         <Link to={`/thread/${thread?.id}`} className='fw-semibold text-decoration-none fs-5'>{thread?.title}</Link>
-        <p className="mb-0">{parse(thread?.body)}</p>
+        <p className="mb-0">{parse(thread?.body ?? '')}</p>
         <div className="d-flex align-items-center gap-2">
           <FontAwesomeIcon 
             icon={[isUpVoted ? 'fas' : 'far', 'thumbs-up']} 
@@ -53,6 +53,8 @@ function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
 
 Thread.propTypes = {
   thread: PropTypes.object.isRequired,
+  upVoteHandler: PropTypes.func.isRequired,
+  downVoteHandler: PropTypes.func.isRequired,
 };
 
 export default Thread;

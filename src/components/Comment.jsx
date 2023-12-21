@@ -2,8 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useSelector } from "react-redux";
 import { fullDatetime } from "../utils/datetime";
+import PropTypes from 'prop-types';
+import parse from 'html-react-parser';
 
-export default function Comment({ comment, threadId, upVoteHandler, downVoteHandler }) {
+function Comment({ comment, threadId, upVoteHandler, downVoteHandler }) {
   const { auth, } = useSelector((state) => state)
   const isUpVoted = comment?.upVotesBy?.includes(auth.id)
   const isDownVoted = comment?.downVotesBy?.includes(auth.id)
@@ -16,7 +18,7 @@ export default function Comment({ comment, threadId, upVoteHandler, downVoteHand
           <span className="fs-6 ms-3 me-auto">{comment.owner.name}</span>
           <span className='small text-muted'>{fullDatetime(comment.createdAt)}</span>
         </div>
-        <span>{comment.content}</span>
+        <span>{parse(comment.content ?? '')}</span>
         <div className="d-flex align-items-center gap-2">
           <FontAwesomeIcon 
             icon={[isUpVoted ? 'fas' : 'far', 'thumbs-up']} 
@@ -37,3 +39,12 @@ export default function Comment({ comment, threadId, upVoteHandler, downVoteHand
     </div>
   )
 }
+
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired,
+  threadId: PropTypes.string.isRequired,
+  upVoteHandler: PropTypes.func.isRequired,
+  downVoteHandler: PropTypes.func.isRequired,
+}
+
+export default Comment;
