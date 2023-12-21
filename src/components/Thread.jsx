@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { fullDatetime } from '../utils/datetime';
+import parse from 'html-react-parser';
 
 function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
   const { auth, users } = useSelector((state) => state)
@@ -24,7 +25,7 @@ function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
           <p className='border w-auto d-inline px-2 py-1 rounded-3 small'>#{thread?.category}</p>
         </div>
         <Link to={`/thread/${thread?.id}`} className='fw-semibold text-decoration-none fs-5'>{thread?.title}</Link>
-        <p className="mb-0">{thread?.body}</p>
+        <p className="mb-0">{parse(thread?.body)}</p>
         <div className="d-flex align-items-center gap-2">
           <FontAwesomeIcon 
             icon={[isUpVoted ? 'fas' : 'far', 'thumbs-up']} 
