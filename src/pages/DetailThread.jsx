@@ -8,7 +8,10 @@ import {
 } from "react-redux";
 import { 
   asyncAddCommentActionCreator, 
-  asyncDetailThreadActionCreator 
+  asyncDetailThreadActionCreator, 
+  asyncDownVoteCommentActionCreator, 
+  asyncNeutralVoteCommentActionCreator, 
+  asyncUpVoteCommentActionCreator
 } from "../redux/thread/action";
 import useInput from '../hooks/useInput';
 import { 
@@ -30,7 +33,6 @@ export default function DetailThread() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(content)
     dispatch(asyncAddCommentActionCreator({ content, id }))
   }
 
@@ -44,9 +46,23 @@ export default function DetailThread() {
     dispatch(asyncDownVoteThreadActionCreator(id))
   }
 
+  const upVoteCommentHandler = (threadId, commentId) => {
+    dispatch(asyncNeutralVoteCommentActionCreator(threadId, commentId))
+    dispatch(asyncUpVoteCommentActionCreator(threadId, commentId))
+  }
+
+  const downVoteCommentHandler = (threadId, commentId) => {
+    dispatch(asyncNeutralVoteCommentActionCreator(threadId, commentId))
+    dispatch(asyncDownVoteCommentActionCreator(threadId, commentId))
+  }
+
   return (
     <>
-      <Thread thread={thread} upVoteHandler={upVoteHandler} downVoteHandler={downVoteHandler}>
+      <Thread 
+        thread={thread} 
+        upVoteHandler={upVoteHandler} 
+        downVoteHandler={downVoteHandler}
+      >
         <h4 className="fw-semibold">Beri komentar</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -57,7 +73,12 @@ export default function DetailThread() {
       </Thread>
       {thread?.comments?.map((comment) => (
         <div key={comment.id}>
-          <Comment comment={comment} />
+          <Comment 
+            comment={comment} 
+            threadId={thread?.id} 
+            upVoteHandler={upVoteCommentHandler} 
+            downVoteHandler={downVoteCommentHandler} 
+          />
         </div>
       ))}
     </>

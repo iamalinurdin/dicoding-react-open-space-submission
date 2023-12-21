@@ -1,4 +1,4 @@
-import { createComment } from "../../api/services/comment"
+import { createComment, downVoteComment, neutralVoteComment, upVoteComment } from "../../api/services/comment"
 import { downVoteThread, neutralVoteThread, showThread, upVoteThread } from "../../api/services/thread"
 
 const ActionType = {
@@ -47,20 +47,21 @@ function downVoteThreadActionCreator(userId) {
   }
 }
 
-function upVoteCommentActionCreator(id) {
+function upVoteCommentActionCreator(commentId, userId) {
   return {
     type: ActionType.COMMENT_UP_VOTE,
     payload: {
-      id
+      commentId,
+      userId
     }
   }
 }
 
-function downVoteCommentActionCreator(id) {
+function downVoteCommentActionCreator(commentId, userId) {
   return {
-    type: ActionType.COMMENT_UP_VOTE,
+    type: ActionType.COMMENT_DOWN_VOTE,
     payload: {
-      id
+      commentId, userId
     }
   }
 }
@@ -137,6 +138,42 @@ function asyncNeutralVoteThreadActionCreator(id) {
   }
 }
 
+function asyncUpVoteCommentActionCreator(threadId, commentId) {
+  return async (dispatch) => {
+    try {
+      const response = await upVoteComment(threadId, commentId);
+      const { userId } = response.data.vote
+
+      dispatch(upVoteCommentActionCreator(commentId, userId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
+
+function asyncDownVoteCommentActionCreator(threadId, commentId) {
+  return async (dispatch) => {
+    try {
+      const response = await downVoteComment(threadId, commentId);
+      const { userId } = response.data.vote
+
+      dispatch(downVoteCommentActionCreator(commentId, userId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
+
+function asyncNeutralVoteCommentActionCreator(threadId, commentId) {
+  return async () => {
+    try {
+      await neutralVoteComment(threadId, commentId);
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
+
 export {
   ActionType,
   setDetailThreadActionCreator,
@@ -149,5 +186,8 @@ export {
   asyncUpVoteThreadActionCreator,
   asyncDownVoteThreadActionCreator,
   asyncNeutralVoteThreadActionCreator,
-  asyncAddCommentActionCreator
+  asyncAddCommentActionCreator,
+  asyncUpVoteCommentActionCreator,
+  asyncNeutralVoteCommentActionCreator,
+  asyncDownVoteCommentActionCreator
 }
