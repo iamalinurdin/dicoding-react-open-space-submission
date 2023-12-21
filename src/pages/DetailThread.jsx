@@ -3,10 +3,8 @@ import { useParams } from "react-router-dom";
 import Thread from "../components/Thread";
 import Comment from "../components/Comment";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncDetailThreadActionCreator } from "../redux/thread/action";
+import { asyncAddCommentActionCreator, asyncDetailThreadActionCreator } from "../redux/thread/action";
 import useInput from '../hooks/useInput';
-import { asyncAddCommentActionCreator } from "../redux/comments/action";
-
 
 export default function DetailThread() {
   const params = useParams();
@@ -21,7 +19,7 @@ export default function DetailThread() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    // console.log(content)
+    console.log(content)
     dispatch(asyncAddCommentActionCreator({ content, id }))
   }
 

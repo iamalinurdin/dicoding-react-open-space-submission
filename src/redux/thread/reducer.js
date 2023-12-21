@@ -8,6 +8,14 @@ function threadReducer(thread = {}, action = {}) {
       return action.payload.thread
     case ActionType.DOWN_VOTE:
       return action.payload.thread
+    case ActionType.ADD_COMMENT:
+      console.log(action.payload)
+      return {
+        ...thread,
+        comments: [action.payload.comment, ...thread.comments]
+      }
+
+      
     // case ActionType.FIND_UP_VOTE:
     //   // console.log(action.payload.thread, action.payload.userId)
 

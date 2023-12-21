@@ -1,11 +1,22 @@
+import { createComment } from "../../api/services/comment"
 import { downVoteThread, showThread, upVoteThread } from "../../api/services/thread"
 
 const ActionType = {
   DETAIL_THREAD: 'DETAIL_THREAD',
   UP_VOTE: 'UP_VOTE',
   DOWN_VOTE: 'DOWN_VOTE',
-  // FIND_UP_VOTE: 'FIND_UP_VOTE',
-  // FIND_DOWN_VOTE: 'FIND_DOWN_VOTE',
+  ADD_COMMENT: 'ADD_COMMENT',
+  COMMENT_UP_VOTE: 'COMMENT_UP_VOTE',
+  COMMENT_DOWN_VOTE: 'COMMENT_DOWN_VOTE',
+}
+
+function addCommentActionCreator(comment) {
+  return {
+    type: ActionType.ADD_COMMENT,
+    payload: {
+      comment,
+    }
+  }
 }
 
 function setDetailThreadActionCreator(thread) {
@@ -35,24 +46,45 @@ function downVoteThreadActionCreator(thread) {
   }
 }
 
-// function findUpVoteThreadActionCreator(thread, userId) {
-//   return {
-//     type: ActionType.FIND_UP_VOTE,
-//     payload: {
-//       thread,
-//       userId
-//     }
-//   }
-// }
+function upVoteCommentActionCreator(id) {
+  return {
+    type: ActionType.COMMENT_UP_VOTE,
+    payload: {
+      id
+    }
+  }
+}
 
-// function findDownVoteThreadActionCreator(id) {
-//   return {
-//     type: ActionType.FIND_DOWN_VOTE,
-//     payload: {
-//       id
-//     }
-//   }
-// }
+function downVoteCommentActionCreator(id) {
+  return {
+    type: ActionType.COMMENT_UP_VOTE,
+    payload: {
+      id
+    }
+  }
+}
+
+function neutralVoteCommentActionCreator(id) {
+  return {
+    type: ActionType.COMMENT_UP_VOTE,
+    payload: {
+      id
+    }
+  }
+}
+
+function asyncAddCommentActionCreator({ content, id }) {
+  return async (dispatch) => {
+    try {
+      const response = await createComment({ content, id })
+      const { comment } = await response.data
+
+      dispatch(addCommentActionCreator(comment))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}
 
 function asyncDetailThreadActionCreator(id) {
   return async (dispatch) => {
@@ -96,9 +128,11 @@ export {
   setDetailThreadActionCreator,
   upVoteThreadActionCreator,
   downVoteThreadActionCreator,
-  // findUpVoteThreadActionCreator,
-  // findDownVoteThreadActionCreator,
+  upVoteCommentActionCreator,
+  downVoteCommentActionCreator,
+  neutralVoteCommentActionCreator,
   asyncDetailThreadActionCreator,
   asyncUpVoteThreadActionCreator,
   asyncDownVoteThreadActionCreator,
+  asyncAddCommentActionCreator
 }

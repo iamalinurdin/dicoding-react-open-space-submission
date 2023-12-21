@@ -8,8 +8,8 @@ import { asyncDownVoteThreadActionCreator, asyncUpVoteThreadActionCreator } from
 function Thread({ children, thread }) {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const isUpVoted = thread.upVotesBy.includes(auth.id)
-  const isDownVoted = thread.downVotesBy.includes(auth.id)
+  const isUpVoted = thread?.upVotesBy?.includes(auth.id)
+  const isDownVoted = thread?.downVotesBy?.includes(auth.id)
 
   const upVoteHandler = (id) => {
     dispatch(asyncUpVoteThreadActionCreator(id))
