@@ -42,7 +42,7 @@ function asyncSetAuthUserActionCreator(payload) {
   }
 }
 
-function asyncUnsetAuthUserActionCreator({ username, password }) {
+function asyncUnsetAuthUserActionCreator() {
   return (dispatch) => {
     dispatch(unsetAuthUserActionCreator())
     putAccessToken('')

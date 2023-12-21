@@ -1,8 +1,15 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Header from './Header';
+import { useDispatch } from 'react-redux';
+import { asyncUnsetAuthUserActionCreator } from '../redux/auth/action';
 
 export default function Layout() {
+  const dispatch = useDispatch()
+  const handleLogout = () => {
+    dispatch(asyncUnsetAuthUserActionCreator())
+  }
+
   return (
     <>
       <Header />
@@ -13,7 +20,7 @@ export default function Layout() {
               <NavLink to='/' className='btn btn-primary w-100'>Threads</NavLink>
               <NavLink to='/leaderboard' className='btn btn-primary w-100'>Leaderboards</NavLink>
               <hr />
-              <button className="btn btn-primary">Logout</button>
+              <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         </div>

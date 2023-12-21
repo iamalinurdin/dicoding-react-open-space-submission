@@ -8,7 +8,7 @@ export default function Header() {
     <nav className="navbar navbar-expand-lg">
       <div className="container">
         <div className="navbar-brand">Dicoding Forum</div>
-        <img src={auth.avatar} height={40} className='rounded-circle' alt="" />
+        <img src={auth?.avatar} height={40} className='rounded-circle' alt="" />
       </div>
     </nav>
   );

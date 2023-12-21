@@ -10,8 +10,7 @@ import { asyncPreloadProcess } from './redux/preload/action';
 import Leaderboards from './pages/Leaderboards';
 
 function App() {
-  const auth = useSelector((state) => state.auth)
-  const preload = useSelector((state) => state.preload)
+  const { auth, preload } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   useEffect(() => {
