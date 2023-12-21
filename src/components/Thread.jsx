@@ -41,7 +41,7 @@ function Thread({ children, thread, upVoteHandler, downVoteHandler }) {
           <span>{thread?.downVotesBy?.length ?? 0}</span>
           <FontAwesomeIcon icon={['far', 'comments']} />
           <span>{thread?.totalComments}</span>
-          <span>{thread?.createdAt}</span>
+          <span className='small text-muted'>{thread?.createdAt}</span>
         </div>
         {children}
       </div>
