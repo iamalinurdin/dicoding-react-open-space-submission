@@ -1,52 +1,52 @@
-import { putAccessToken } from "../../api"
-import { login, me, register } from "../../api/services/user"
+import { putAccessToken } from '../../api';
+import { login, me, register } from '../../api/services/user';
 
 const ActionType = {
   SET_AUTH_USER: 'SET_AUTH_USER',
   UNSET_AUTH_USER: 'UNSET_AUTH_USER',
-}
+};
 
 function setAuthUserActionCreator(user) {
   return {
     type: ActionType.SET_AUTH_USER,
     payload: {
-      user
-    }
-  }
+      user,
+    },
+  };
 }
 
 function unsetAuthUserActionCreator() {
   return {
     type: ActionType.UNSET_AUTH_USER,
     payload: {
-      user: null
-    }
-  }
+      user: null,
+    },
+  };
 }
 
 function asyncSetAuthUserActionCreator(payload) {
   return async (dispatch) => {
     try {
       const response = await login(payload);
-      const { token } = response.data
-      
-      putAccessToken(token)
+      const { token } = response.data;
 
-      const profile = await me()
-      const { user } = profile.data
+      putAccessToken(token);
 
-      dispatch(setAuthUserActionCreator(user))
+      const profile = await me();
+      const { user } = profile.data;
+
+      dispatch(setAuthUserActionCreator(user));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncUnsetAuthUserActionCreator() {
   return (dispatch) => {
-    dispatch(unsetAuthUserActionCreator())
-    putAccessToken('')
-  }
+    dispatch(unsetAuthUserActionCreator());
+    putAccessToken('');
+  };
 }
 
 function asyncRegisterActionCreator(payload) {
@@ -54,9 +54,9 @@ function asyncRegisterActionCreator(payload) {
     try {
       await register(payload);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 export {
@@ -66,4 +66,4 @@ export {
   asyncSetAuthUserActionCreator,
   asyncUnsetAuthUserActionCreator,
   asyncRegisterActionCreator,
-}
+};

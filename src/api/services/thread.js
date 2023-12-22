@@ -1,4 +1,4 @@
-import { getAccessToken } from "..";
+import { getAccessToken } from '..';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -17,7 +17,7 @@ async function createThread(payload) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   });
@@ -40,11 +40,11 @@ async function upVoteThread(id) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
-  return response.json()
+  return response.json();
 }
 
 async function downVoteThread(id) {
@@ -52,11 +52,11 @@ async function downVoteThread(id) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
-  return response.json()
+  return response.json();
 }
 
 async function neutralVoteThread(id) {
@@ -64,18 +64,18 @@ async function neutralVoteThread(id) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
-  return response.json()
+  return response.json();
 }
 
-export { 
-  getThreads, 
-  createThread, 
+export {
+  getThreads,
+  createThread,
   showThread,
   upVoteThread,
   downVoteThread,
-  neutralVoteThread
+  neutralVoteThread,
 };

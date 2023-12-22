@@ -1,5 +1,9 @@
-import { createComment, downVoteComment, neutralVoteComment, upVoteComment } from "../../api/services/comment"
-import { downVoteThread, neutralVoteThread, showThread, upVoteThread } from "../../api/services/thread"
+import {
+  createComment, downVoteComment, neutralVoteComment, upVoteComment,
+} from '../../api/services/comment';
+import {
+  downVoteThread, neutralVoteThread, showThread, upVoteThread,
+} from '../../api/services/thread';
 
 const ActionType = {
   DETAIL_THREAD: 'DETAIL_THREAD',
@@ -9,42 +13,42 @@ const ActionType = {
   ADD_COMMENT: 'ADD_COMMENT',
   COMMENT_UP_VOTE: 'COMMENT_UP_VOTE',
   COMMENT_DOWN_VOTE: 'COMMENT_DOWN_VOTE',
-}
+};
 
 function addCommentActionCreator(comment) {
   return {
     type: ActionType.ADD_COMMENT,
     payload: {
       comment,
-    }
-  }
+    },
+  };
 }
 
 function setDetailThreadActionCreator(thread) {
   return {
     type: ActionType.DETAIL_THREAD,
     payload: {
-      thread
-    }
-  }
+      thread,
+    },
+  };
 }
 
 function upVoteThreadActionCreator(userId) {
   return {
     type: ActionType.UP_VOTE,
     payload: {
-      userId
-    }
-  }
+      userId,
+    },
+  };
 }
 
 function downVoteThreadActionCreator(userId) {
   return {
     type: ActionType.DOWN_VOTE,
     payload: {
-      userId
-    }
-  }
+      userId,
+    },
+  };
 }
 
 function upVoteCommentActionCreator(commentId, userId) {
@@ -52,116 +56,115 @@ function upVoteCommentActionCreator(commentId, userId) {
     type: ActionType.COMMENT_UP_VOTE,
     payload: {
       commentId,
-      userId
-    }
-  }
+      userId,
+    },
+  };
 }
 
 function downVoteCommentActionCreator(commentId, userId) {
   return {
     type: ActionType.COMMENT_DOWN_VOTE,
     payload: {
-      commentId, userId
-    }
-  }
+      commentId, userId,
+    },
+  };
 }
 
 function neutralVoteThreadActionCreator(id) {
   return {
     type: ActionType.NEUTRAL_VOTE,
     payload: {
-      id
-    }
-  }
+      id,
+    },
+  };
 }
 
 function asyncAddCommentActionCreator({ content, id }) {
   return async (dispatch) => {
     try {
-      const response = await createComment({ content, id })
-      const { comment } = await response.data
+      const response = await createComment({ content, id });
+      const { comment } = await response.data;
 
-      dispatch(addCommentActionCreator(comment))
+      dispatch(addCommentActionCreator(comment));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncDetailThreadActionCreator(id) {
   return async (dispatch) => {
     try {
-      const response = await showThread(id)
-      const { detailThread } = response.data
+      const response = await showThread(id);
+      const { detailThread } = response.data;
 
-      dispatch(setDetailThreadActionCreator(detailThread))
+      dispatch(setDetailThreadActionCreator(detailThread));
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
 }
 
 function asyncUpVoteThreadActionCreator(id) {
   return async (dispatch) => {
     try {
       const response = await upVoteThread(id);
-      const { userId } = response.data.vote
+      const { userId } = response.data.vote;
 
-      dispatch(upVoteThreadActionCreator(userId))
+      dispatch(upVoteThreadActionCreator(userId));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncDownVoteThreadActionCreator(id) {
   return async (dispatch) => {
     try {
       const response = await downVoteThread(id);
-      const { userId } = response.data.vote
+      const { userId } = response.data.vote;
 
-      dispatch(downVoteThreadActionCreator(userId))
+      dispatch(downVoteThreadActionCreator(userId));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncNeutralVoteThreadActionCreator(id) {
-  return async (dispatch) => {
+  return async () => {
     try {
       await neutralVoteThread(id);
     } catch (error) {
-      alert(error.message)
-      // dispatch(downVoteThreadActionCreator(id))
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncUpVoteCommentActionCreator(threadId, commentId) {
   return async (dispatch) => {
     try {
       const response = await upVoteComment(threadId, commentId);
-      const { userId } = response.data.vote
+      const { userId } = response.data.vote;
 
-      dispatch(upVoteCommentActionCreator(commentId, userId))
+      dispatch(upVoteCommentActionCreator(commentId, userId));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncDownVoteCommentActionCreator(threadId, commentId) {
   return async (dispatch) => {
     try {
       const response = await downVoteComment(threadId, commentId);
-      const { userId } = response.data.vote
+      const { userId } = response.data.vote;
 
-      dispatch(downVoteCommentActionCreator(commentId, userId))
+      dispatch(downVoteCommentActionCreator(commentId, userId));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncNeutralVoteCommentActionCreator(threadId, commentId) {
@@ -169,9 +172,9 @@ function asyncNeutralVoteCommentActionCreator(threadId, commentId) {
     try {
       await neutralVoteComment(threadId, commentId);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 }
 
 export {
@@ -189,5 +192,5 @@ export {
   asyncAddCommentActionCreator,
   asyncUpVoteCommentActionCreator,
   asyncNeutralVoteCommentActionCreator,
-  asyncDownVoteCommentActionCreator
-}
+  asyncDownVoteCommentActionCreator,
+};

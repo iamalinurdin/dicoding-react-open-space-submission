@@ -1,3 +1,11 @@
+function putAccessToken(token) {
+  return localStorage.setItem('access_token', token);
+}
+
+function getAccessToken() {
+  return localStorage.getItem('access_token');
+}
+
 async function fetchWithAuth(url, options = {}) {
   return fetch(url, {
     ...options,
@@ -8,16 +16,8 @@ async function fetchWithAuth(url, options = {}) {
   });
 }
 
-function putAccessToken(token) {
-  return localStorage.setItem('access_token', token);
-}
-
-function getAccessToken() {
-  return localStorage.getItem('access_token');
-}
-
 export {
-  fetchWithAuth, 
-  putAccessToken, 
-  getAccessToken 
-}
+  fetchWithAuth,
+  putAccessToken,
+  getAccessToken,
+};

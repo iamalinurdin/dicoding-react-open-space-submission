@@ -1,11 +1,11 @@
-import { ActionType } from "./action";
+import { ActionType } from './action';
 
 function threadsReducer(threads = [], action = {}) {
   switch (action.type) {
     case ActionType.RECEIVE_THREADS:
-      return action.payload.threads    
+      return action.payload.threads;
     case ActionType.ADD_THREAD:
-      return [action.payload.thread, ...threads]
+      return [action.payload.thread, ...threads];
     case ActionType.UP_VOTE:
       return threads.map((thread) => {
         if (thread.id === action.payload.threadId) {
@@ -14,19 +14,12 @@ function threadsReducer(threads = [], action = {}) {
             upVotesBy: thread.upVotesBy.includes(action.payload.userId)
               ? thread.upVotesBy.filter((item) => item !== action.payload.userId)
               : thread.upVotesBy.concat([action.payload.userId]),
-            downVotesBy: thread.downVotesBy.filter((item) => item !== action.payload.userId)
-          }
+            downVotesBy: thread.downVotesBy.filter((item) => item !== action.payload.userId),
+          };
         }
 
         return thread;
-      })
-      // return {
-      //   ...thread,
-      //   upVotesBy: thread.upVotesBy.includes(action.payload.userId)
-      //     ? thread.upVotesBy.filter((item) => item !== action.payload.userId)
-      //     : thread.upVotesBy.concat([action.payload.userId]),
-      //   downVotesBy: thread.downVotesBy.filter((item) => item !== action.payload.userId)
-      // }
+      });
     case ActionType.DOWN_VOTE:
       return threads.map((thread) => {
         if (thread.id === action.payload.threadId) {
@@ -35,23 +28,15 @@ function threadsReducer(threads = [], action = {}) {
             downVotesBy: thread.downVotesBy.includes(action.payload.userId)
               ? thread.downVotesBy.filter((item) => item !== action.payload.userId)
               : thread.downVotesBy.concat([action.payload.userId]),
-            upVotesBy: thread.upVotesBy.filter((item) => item !== action.payload.userId)
-          }
+            upVotesBy: thread.upVotesBy.filter((item) => item !== action.payload.userId),
+          };
         }
 
         return thread;
-      })
-
-      // return {
-      //   ...thread,
-      //   downVotesBy: thread.downVotesBy.includes(action.payload.userId)
-      //     ? thread.downVotesBy.filter((item) => item !== action.payload.userId)
-      //     : thread.downVotesBy.concat([action.payload.userId]),
-      //   upVotesBy: thread.upVotesBy.filter((item) => item !== action.payload.userId)
-      // }
+      });
     default:
-      return threads
+      return threads;
   }
 }
 
-export default threadsReducer
+export default threadsReducer;

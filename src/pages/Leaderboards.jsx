@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncAddRetrieveLeaderboardsActionCreator } from "../redux/leaderboards/action";
-import Leaderboard from "../components/Leaderboard";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncAddRetrieveLeaderboardsActionCreator } from '../redux/leaderboards/action';
+import Leaderboard from '../components/Leaderboard';
 
 export default function Leaderboards() {
-  const dispatch = useDispatch()
-  const { 
-    leaderboards = [] 
-  } = useSelector((state) => state)
+  const dispatch = useDispatch();
+  const {
+    leaderboards = [],
+  } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(asyncAddRetrieveLeaderboardsActionCreator())
-  }, [dispatch])
+    dispatch(asyncAddRetrieveLeaderboardsActionCreator());
+  }, [dispatch]);
 
   return (
     <>
@@ -22,5 +22,5 @@ export default function Leaderboards() {
         </div>
       ))}
     </>
-  )
+  );
 }

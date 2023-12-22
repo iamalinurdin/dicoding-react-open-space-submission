@@ -1,38 +1,38 @@
-import { me } from "../../api/services/user"
-import { setAuthUserActionCreator } from "../auth/action"
-import { asyncRetrieveUsersActionCreator } from "../users/action"
+import { me } from '../../api/services/user';
+import { setAuthUserActionCreator } from '../auth/action';
+import { asyncRetrieveUsersActionCreator } from '../users/action';
 
 const ActionType = {
-  SET_PRELOAD: 'SET_PRELOAD'
-}
+  SET_PRELOAD: 'SET_PRELOAD',
+};
 
 function setPreloadActionCreator(isPreload) {
   return {
     type: ActionType.SET_PRELOAD,
     payload: {
-      isPreload
-    }
-  }
+      isPreload,
+    },
+  };
 }
 
 function asyncPreloadProcess() {
   return async (dispatch) => {
     try {
-      const profile = await me()
-      const { user } = profile.data
+      const profile = await me();
+      const { user } = profile.data;
 
-      dispatch(asyncRetrieveUsersActionCreator())
-      dispatch(setAuthUserActionCreator(user))
+      dispatch(asyncRetrieveUsersActionCreator());
+      dispatch(setAuthUserActionCreator(user));
     } catch (error) {
-      dispatch(setAuthUserActionCreator(null))
+      dispatch(setAuthUserActionCreator(null));
     } finally {
-      dispatch(setPreloadActionCreator(false))
+      dispatch(setPreloadActionCreator(false));
     }
-  }
+  };
 }
 
 export {
   ActionType,
   asyncPreloadProcess,
-  setPreloadActionCreator
-}
+  setPreloadActionCreator,
+};

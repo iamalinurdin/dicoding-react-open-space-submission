@@ -7,15 +7,15 @@ function Leaderboard({ user, score }) {
       <img src={user.avatar} className="rounded-circle me-3" width={40} alt="" />
       <section className="description">
         <p className="mb-0 fw-semibold">{user.name}</p>
-        <p className="mb-0">Score: {score}</p>
+        <p className="mb-0">{`Score: ${score}`}</p>
       </section>
     </article>
-  )
+  );
 }
 
 Leaderboard.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape.isRequired,
   score: PropTypes.number.isRequired,
-}
+};
 
 export default Leaderboard;

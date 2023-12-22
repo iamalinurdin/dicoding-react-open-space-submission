@@ -1,4 +1,4 @@
-import { fetchWithAuth } from "../index";
+import { fetchWithAuth } from '../index';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -6,7 +6,7 @@ async function login(payload) {
   const response = await fetch(`${baseURL}/login`, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   });
@@ -18,7 +18,7 @@ async function register(payload) {
   const response = await fetch(`${baseURL}/register`, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   });
@@ -35,18 +35,14 @@ async function getUsers() {
 }
 
 async function me() {
-  // const response = await fetch(`${baseURL}/users/me`, {
-  //   method: 'GET',
-  // });
-
   const response = await fetchWithAuth(`${baseURL}/users/me`);
 
   return response.json();
 }
 
 export {
-  login, 
-  register, 
-  getUsers, 
-  me
+  login,
+  register,
+  getUsers,
+  me,
 };

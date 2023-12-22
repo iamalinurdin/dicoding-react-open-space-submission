@@ -1,4 +1,4 @@
-import { getAccessToken } from "..";
+import { getAccessToken } from '..';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -7,10 +7,10 @@ async function createComment({ content, id }) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      content
+      content,
     }),
   });
 
@@ -22,7 +22,7 @@ async function upVoteComment(threadId, commentId) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
@@ -34,7 +34,7 @@ async function downVoteComment(threadId, commentId) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
@@ -46,7 +46,7 @@ async function neutralVoteComment(threadId, commentId) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   });
 
@@ -58,4 +58,4 @@ export {
   upVoteComment,
   downVoteComment,
   neutralVoteComment,
-}
+};
